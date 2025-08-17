@@ -593,10 +593,32 @@ export default function App() {
                         )}
                       </div>
                     ) : (
-                      <div className="prose prose-sm max-w-none">
+                      <div className="markdown-content prose prose-sm max-w-none">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           rehypePlugins={[rehypeHighlight]}
+                          components={{
+                            code({node, inline, className, children, ...props}) {
+                              const match = /language-(\w+)/.exec(className || '');
+                              const language = match ? match[1] : '';
+                              
+                              if (!inline && language) {
+                                return (
+                                  <pre data-language={language} {...props}>
+                                    <code className={className}>
+                                      {children}
+                                    </code>
+                                  </pre>
+                                );
+                              }
+                              
+                              return (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              );
+                            }
+                          }}
                         >
                           {message.content}
                         </ReactMarkdown>
