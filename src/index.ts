@@ -37,7 +37,7 @@ app.use(express.json({ limit: `${config.maxFileSizeMB}mb` }));
 app.use(express.urlencoded({ extended: true, limit: `${config.maxFileSizeMB}mb` }));
 
 // Static files
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../web-dist')));
 
 // Initialize agent
 const agentConfig: AgentConfig = {
@@ -220,7 +220,7 @@ app.get('/api/health', (_req, res) => {
 
 // Serve React app for all non-API routes
 app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+  res.sendFile(path.join(__dirname, '../web-dist/index.html'));
 });
 
 // Error handling middleware
