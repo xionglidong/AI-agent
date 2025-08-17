@@ -164,7 +164,7 @@ export class MCPTools {
       const { spawn } = require('child_process');
       const [cmd, ...args] = command.split(' ');
       
-      const process = spawn(cmd, args, {
+      const childProcess = spawn(cmd, args, {
         cwd: cwd || process.cwd(),
         stdio: ['pipe', 'pipe', 'pipe'],
       });
@@ -172,19 +172,19 @@ export class MCPTools {
       let stdout = '';
       let stderr = '';
 
-      process.stdout.on('data', (data: Buffer) => {
+      childProcess.stdout?.on('data', (data: Buffer) => {
         stdout += data.toString();
       });
 
-      process.stderr.on('data', (data: Buffer) => {
+      childProcess.stderr?.on('data', (data: Buffer) => {
         stderr += data.toString();
       });
 
-      process.on('close', (code: number) => {
+      childProcess.on('close', (code: number) => {
         resolve({ stdout, stderr, code });
       });
 
-      process.on('error', (error: Error) => {
+      childProcess.on('error', (error: Error) => {
         reject(error);
       });
     });

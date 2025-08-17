@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Send, Bot, User, Code, Shield, Zap, FileText, FolderOpen, 
-  CheckCircle, AlertTriangle, XCircle, Info, Lightbulb,
-  Upload, Download, Settings, Play, Search, GitBranch
+  Bot, Code, Shield, Zap, FileText,
+  XCircle, Lightbulb,
+  Upload, Search, GitBranch
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -16,12 +16,12 @@ interface CodeReviewIssue {
   suggestion?: string;
 }
 
-interface CodeReviewResponse {
-  issues: CodeReviewIssue[];
-  score: number;
-  summary: string;
-  optimizedCode?: string;
-}
+// interface CodeReviewResponse {
+//   issues: CodeReviewIssue[];
+//   score: number;
+//   summary: string;
+//   optimizedCode?: string;
+// }
 
 interface AnalysisResult {
   type: 'code-review' | 'repository-review' | 'code-optimization' | 'code-explanation';
@@ -277,9 +277,11 @@ export default function App() {
             
             <div className="mb-4">
               <h3 className="text-lg font-medium mb-2">Summary</h3>
-              <ReactMarkdown className="text-sm text-gray-700">
-                {result.data.summary}
-              </ReactMarkdown>
+              <div className="text-sm text-gray-700">
+                <ReactMarkdown>
+                  {result.data.summary}
+                </ReactMarkdown>
+              </div>
             </div>
 
             {result.data.issues.length > 0 && (
@@ -316,9 +318,11 @@ export default function App() {
 
             <div className="mb-4">
               <h3 className="text-lg font-medium mb-2">Repository Summary</h3>
-              <ReactMarkdown className="text-sm text-gray-700">
-                {result.data.summary}
-              </ReactMarkdown>
+              <div className="text-sm text-gray-700">
+                <ReactMarkdown>
+                  {result.data.summary}
+                </ReactMarkdown>
+              </div>
             </div>
 
             <div>
@@ -354,13 +358,14 @@ export default function App() {
         {result.type === 'code-explanation' && (
           <div>
             <h3 className="text-lg font-medium mb-2">Code Explanation</h3>
-            <ReactMarkdown 
-              className="prose max-w-none"
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight]}
-            >
-              {result.data.explanation}
-            </ReactMarkdown>
+            <div className="prose max-w-none">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+              >
+                {result.data.explanation}
+              </ReactMarkdown>
+            </div>
           </div>
         )}
       </div>

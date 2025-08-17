@@ -13,7 +13,7 @@ export class PerformanceAnalyzer {
     return issues;
   }
 
-  private checkAlgorithmicComplexity(code: string, language: string): CodeIssue[] {
+  private checkAlgorithmicComplexity(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -89,7 +89,7 @@ export class PerformanceAnalyzer {
     return issues;
   }
 
-  private checkMemoryUsage(code: string, language: string): CodeIssue[] {
+  private checkMemoryUsage(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -98,7 +98,7 @@ export class PerformanceAnalyzer {
       const trimmedLine = line.trim();
 
       // Large array operations
-      if (trimmedLine.includes('new Array(') && /\\d{4,}/.test(trimmedLine)) {
+      if (trimmedLine.includes('new Array(') && /\d{4,}/.test(trimmedLine)) {
         issues.push({
           type: 'performance',
           severity: 'medium',
@@ -166,7 +166,7 @@ export class PerformanceAnalyzer {
     return issues;
   }
 
-  private checkAsyncPatterns(code: string, language: string): CodeIssue[] {
+  private checkAsyncPatterns(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -230,7 +230,7 @@ export class PerformanceAnalyzer {
       }
 
       // Callback hell
-      const callbackDepth = (trimmedLine.match(/function\\s*\\(/g) || []).length;
+      const callbackDepth = (trimmedLine.match(/function\s*\(/g) || []).length;
       if (callbackDepth > 2) {
         issues.push({
           type: 'performance',
@@ -319,7 +319,7 @@ export class PerformanceAnalyzer {
     return issues;
   }
 
-  private checkDatabaseQueries(code: string, language: string): CodeIssue[] {
+  private checkDatabaseQueries(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -345,7 +345,7 @@ export class PerformanceAnalyzer {
 
       // Missing indexes
       if (trimmedLine.includes('WHERE') && !trimmedLine.includes('INDEX')) {
-        const whereMatch = trimmedLine.match(/WHERE\\s+(\\w+)\\s*=/);
+        const whereMatch = trimmedLine.match(/WHERE\s+(\w+)\s*=/);
         if (whereMatch) {
           issues.push({
             type: 'performance',

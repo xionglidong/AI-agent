@@ -13,7 +13,7 @@ export class AdvancedAnalyzer {
     return issues;
   }
 
-  private checkDesignPatterns(code: string, language: string): CodeIssue[] {
+  private checkDesignPatterns(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -24,8 +24,8 @@ export class AdvancedAnalyzer {
       // God class detection (too many methods/properties)
       if (trimmedLine.includes('class ')) {
         const classContent = this.extractClassContent(lines, index);
-        const methodCount = (classContent.match(/function\\s+\\w+|\\w+\\s*\\(/g) || []).length;
-        const propertyCount = (classContent.match(/this\\.\\w+\\s*=/g) || []).length;
+        const methodCount = (classContent.match(/function\s+\w+|\w+\s*\(/g) || []).length;
+        const propertyCount = (classContent.match(/this\.\w+\s*=/g) || []).length;
         
         if (methodCount > 15 || propertyCount > 20) {
           issues.push({
@@ -52,7 +52,7 @@ export class AdvancedAnalyzer {
       // Factory pattern opportunity
       if (trimmedLine.includes('switch') || trimmedLine.includes('if')) {
         const nextLines = lines.slice(index, index + 10).join('\\n');
-        if (nextLines.includes('new ') && (nextLines.match(/new\\s+\\w+/g) || []).length > 3) {
+        if (nextLines.includes('new ') && (nextLines.match(/new\s+\w+/g) || []).length > 3) {
           issues.push({
             type: 'suggestion',
             severity: 'medium',
@@ -76,7 +76,7 @@ export class AdvancedAnalyzer {
       const trimmedLine = line.trim();
 
       // Long parameter list
-      const paramMatch = trimmedLine.match(/function\\s+\\w+\\s*\\(([^)]+)\\)/);
+      const paramMatch = trimmedLine.match(/function\s+\w+\s*\(([^)]+)\)/);
       if (paramMatch) {
         const params = paramMatch[1].split(',').filter(p => p.trim());
         if (params.length > 5) {
@@ -107,7 +107,7 @@ export class AdvancedAnalyzer {
       }
 
       // Magic numbers
-      const numberMatch = trimmedLine.match(/\\b(\\d{2,})\\b/);
+      const numberMatch = trimmedLine.match(/\b(\d{2,})\b/);
       if (numberMatch && !trimmedLine.includes('//')) {
         const number = parseInt(numberMatch[1]);
         if (number > 10 && number !== 100 && number !== 1000) {
@@ -122,7 +122,7 @@ export class AdvancedAnalyzer {
       }
 
       // Feature envy (excessive method calls on other objects)
-      const methodCalls = (trimmedLine.match(/\\w+\\.\\w+\\(/g) || []).length;
+      const methodCalls = (trimmedLine.match(/\w+\.\w+\(/g) || []).length;
       if (methodCalls > 3) {
         issues.push({
           type: 'suggestion',
@@ -150,7 +150,7 @@ export class AdvancedAnalyzer {
     return issues;
   }
 
-  private checkMaintainability(code: string, language: string): CodeIssue[] {
+  private checkMaintainability(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -216,7 +216,7 @@ export class AdvancedAnalyzer {
     return issues;
   }
 
-  private checkTestability(code: string, language: string): CodeIssue[] {
+  private checkTestability(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -226,7 +226,7 @@ export class AdvancedAnalyzer {
 
       // Static method calls (hard to mock)
       if (trimmedLine.includes('.') && trimmedLine.includes('(')) {
-        const staticCallPattern = /\\b[A-Z]\\w*\\.\\w+\\(/;
+        const staticCallPattern = /\b[A-Z]\w*\.\w+\(/;
         if (staticCallPattern.test(trimmedLine)) {
           issues.push({
             type: 'suggestion',
@@ -288,7 +288,7 @@ export class AdvancedAnalyzer {
     return issues;
   }
 
-  private checkDocumentation(code: string, language: string): CodeIssue[] {
+  private checkDocumentation(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -315,7 +315,7 @@ export class AdvancedAnalyzer {
 
       // Complex regular expressions without explanation
       if (trimmedLine.includes('/') && trimmedLine.includes('\\')) {
-        const regexMatch = trimmedLine.match(/\\/[^/]+\\/[gimuy]*/);
+        const regexMatch = trimmedLine.match(/\/[^/]+\/[gimuy]*/);
         if (regexMatch && regexMatch[0].length > 20) {
           const prevLine = index > 0 ? lines[index - 1].trim() : '';
           if (!prevLine.includes('//')) {

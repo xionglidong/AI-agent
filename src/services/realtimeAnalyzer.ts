@@ -1,5 +1,5 @@
 import chokidar from 'chokidar';
-import WebSocket from 'ws';
+import WebSocket, { WebSocketServer } from 'ws';
 import path from 'path';
 import fs from 'fs-extra';
 import { MastraCodeReviewAgent } from '../agent';
@@ -14,8 +14,8 @@ export interface RealtimeAnalysisResult {
 }
 
 export class RealtimeAnalyzer {
-  private watcher: chokidar.FSWatcher | null = null;
-  private wsServer: WebSocket.Server | null = null;
+  private watcher: any | null = null;
+  private wsServer: WebSocketServer | null = null;
   private agent: MastraCodeReviewAgent;
   private watchedPaths: Set<string> = new Set();
   private analysisQueue: Map<string, NodeJS.Timeout> = new Map();
@@ -25,7 +25,7 @@ export class RealtimeAnalyzer {
   }
 
   startWebSocketServer(port: number = 8080) {
-    this.wsServer = new WebSocket.Server({ port });
+    this.wsServer = new WebSocketServer({ port });
     
     this.wsServer.on('connection', (ws) => {
       logger.info('WebSocket client connected');
@@ -145,10 +145,10 @@ export class RealtimeAnalyzer {
     });
 
     this.watcher
-      .on('add', (filePath) => this.handleFileChange(filePath, 'added'))
-      .on('change', (filePath) => this.handleFileChange(filePath, 'changed'))
-      .on('unlink', (filePath) => this.handleFileChange(filePath, 'deleted'))
-      .on('error', (error) => {
+      .on('add', (filePath: string) => this.handleFileChange(filePath, 'added'))
+      .on('change', (filePath: string) => this.handleFileChange(filePath, 'changed'))
+      .on('unlink', (filePath: string) => this.handleFileChange(filePath, 'deleted'))
+      .on('error', (error: Error) => {
         logger.error('File watcher error:', error);
       });
 

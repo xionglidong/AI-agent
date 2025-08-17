@@ -133,7 +133,7 @@ export class CodeAnalyzer {
     return issues;
   }
 
-  private checkComplexity(code: string, language: string): CodeIssue[] {
+  private checkComplexity(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 

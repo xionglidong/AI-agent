@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { MastraCodeReviewAgent, AgentConfig } from './agent';
-import { MCPTools } from './mcp/tools';
+// import { MCPTools } from './mcp/tools';
 import { RealtimeAnalyzer } from './services/realtimeAnalyzer';
 import * as path from 'path';
 import * as fs from 'fs-extra';
@@ -142,7 +142,7 @@ app.post('/api/explain-code', async (req, res) => {
   }
 });
 
-app.get('/api/supported-languages', (req, res) => {
+app.get('/api/supported-languages', (_req, res) => {
   res.json({
     languages: [
       'javascript',
@@ -198,7 +198,7 @@ app.delete('/api/realtime/watch', async (req, res) => {
   }
 });
 
-app.get('/api/realtime/watched-paths', async (req, res) => {
+app.get('/api/realtime/watched-paths', async (_req, res) => {
   try {
     const paths = await realtimeAnalyzer.getWatchedPaths();
     res.json({ paths });
@@ -209,7 +209,7 @@ app.get('/api/realtime/watched-paths', async (req, res) => {
 });
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
   res.json({ 
     status: 'ok', 
     timestamp: new Date().toISOString(),
@@ -219,12 +219,12 @@ app.get('/api/health', (req, res) => {
 });
 
 // Serve React app for all non-API routes
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Error handling middleware
-app.use((error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   logger.error('Unhandled error:', error);
   res.status(500).json({ error: 'Internal server error' });
 });

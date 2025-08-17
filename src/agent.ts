@@ -1,5 +1,5 @@
-import { openai } from '@ai-sdk/openai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { createOpenAI } from '@ai-sdk/openai';
+import { createAnthropic } from '@ai-sdk/anthropic';
 import { generateText, generateObject } from 'ai';
 import { z } from 'zod';
 import { MCPTools } from './mcp/tools';
@@ -58,19 +58,21 @@ export class MastraCodeReviewAgent {
 
   private getModel() {
     if (this.config.model.startsWith('gpt')) {
-      return openai(this.config.model, {
+      const openai = createOpenAI({
         apiKey: this.config.apiKey,
       });
+      return openai(this.config.model as any);
     } else if (this.config.model.startsWith('claude')) {
-      return anthropic(this.config.model, {
+      const anthropic = createAnthropic({
         apiKey: this.config.apiKey,
       });
+      return anthropic(this.config.model as any);
     }
     throw new Error(`Unsupported model: ${this.config.model}`);
   }
 
   async analyzeCode(request: CodeReviewRequest): Promise<CodeReviewResponse> {
-    const { code, language, filePath, context } = request;
+    const { code, language, context } = request;
 
     // Run multiple analyzers in parallel
     const [syntaxIssues, securityIssues, performanceIssues, advancedIssues] = await Promise.all([

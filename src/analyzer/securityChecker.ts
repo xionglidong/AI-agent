@@ -71,7 +71,7 @@ export class SecurityChecker {
       }
 
       // Path traversal
-      if (trimmedLine.includes('../') || trimmedLine.includes('..\\\\')) {
+      if (trimmedLine.includes('../') || trimmedLine.includes('..\\')) {
         issues.push({
           type: 'security',
           severity: 'high',
@@ -85,7 +85,7 @@ export class SecurityChecker {
     return issues;
   }
 
-  private checkCryptographicIssues(code: string, language: string): CodeIssue[] {
+  private checkCryptographicIssues(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -150,7 +150,7 @@ export class SecurityChecker {
     return issues;
   }
 
-  private checkAuthenticationIssues(code: string, language: string): CodeIssue[] {
+  private checkAuthenticationIssues(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -207,7 +207,7 @@ export class SecurityChecker {
     return issues;
   }
 
-  private checkDataExposure(code: string, language: string): CodeIssue[] {
+  private checkDataExposure(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
@@ -257,7 +257,7 @@ export class SecurityChecker {
     return issues;
   }
 
-  private checkInsecureDependencies(code: string, language: string): CodeIssue[] {
+  private checkInsecureDependencies(code: string, _language: string): CodeIssue[] {
     const issues: CodeIssue[] = [];
     const lines = code.split('\\n');
 
