@@ -97,47 +97,50 @@ function buildConversationContext(
   attachedCode?: string, 
   fileName?: string
 ) {
-  let context = `你是一个智能、友好的AI助手，具有强大的代码分析和编程指导能力。
+  let context = `你是一个智能、友好的AI助手，既能进行自然对话，也具备专业的编程指导能力。
 
-**你的特点**：
-- 能够进行自然、流畅的日常对话
-- 在编程和技术领域有专业的知识和经验
-- 对代码质量、性能优化、安全性有深度理解
-- 善于教学，能用简单易懂的方式解释复杂概念
+**对话原则**：
+- 自然、友好、有帮助的交流风格
+- 对任何话题都能给出有价值的回答
+- 如果涉及编程，提供专业的技术建议
+- 保持积极正面，富有同理心
 
-**对话风格**：
-- 自然、友好、有帮助
-- 根据用户的问题给出针对性的回答
-- 如果涉及代码，主动提供专业的分析和建议
-- 保持积极正面的态度
+**你的能力**：
+- 日常对话：生活建议、知识问答、情感支持
+- 编程专长：代码分析、架构设计、问题解决
+- 学习指导：概念解释、最佳实践、技能提升
 
-当前对话：`;
+请根据用户的具体问题，给出最合适的回答。`;
 
-  // 添加历史对话（最近5轮）
-  const recentHistory = history.slice(-10);
-  for (const msg of recentHistory) {
-    if (msg.type === 'user') {
-      context += `\n用户: ${msg.content}`;
-    } else if (msg.type === 'assistant') {
-      context += `\n助手: ${msg.content}`;
+  // 添加历史对话（最近8轮）
+  const recentHistory = history.slice(-16);
+  if (recentHistory.length > 0) {
+    context += `\n\n**对话历史**：`;
+    for (const msg of recentHistory) {
+      if (msg.type === 'user') {
+        context += `\n用户: ${msg.content}`;
+      } else if (msg.type === 'assistant') {
+        const shortContent = msg.content.length > 150 
+          ? msg.content.substring(0, 150) + '...' 
+          : msg.content;
+        context += `\n助手: ${shortContent}`;
+      }
     }
   }
 
   // 添加当前消息
-  context += `\n用户: ${currentMessage}`;
+  context += `\n\n**当前问题**：${currentMessage}`;
 
   // 添加附加的代码
   if (attachedCode) {
-    context += `\n\n[用户上传了代码文件${fileName ? `: ${fileName}` : ''}]\n\`\`\`\n${attachedCode}\n\`\`\``;
+    context += `\n\n**用户上传的代码**${fileName ? ` (${fileName})` : ''}：\n\`\`\`\n${attachedCode.substring(0, 2000)}${attachedCode.length > 2000 ? '\n...(代码已截断)' : ''}\n\`\`\``;
   }
 
   // 检测代码块
   const codeBlockMatch = currentMessage.match(/```[\w]*\n([\s\S]*?)\n```/);
   if (codeBlockMatch) {
-    context += `\n\n[用户在消息中包含了代码]`;
+    context += `\n\n**注意**：用户在消息中包含了代码片段，请重点关注代码相关的问题。`;
   }
-
-  context += `\n\n请根据用户的问题给出有帮助的回答。如果涉及代码，请提供具体的分析和建议。`;
 
   return context;
 }
@@ -151,19 +154,15 @@ async function callAIForChat(context: string, apiKey: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4o-mini',
         messages: [
           {
             role: 'system',
             content: context
-          },
-          {
-            role: 'user',
-            content: '请回答用户的问题，提供有价值的编程建议。'
           }
         ],
-        max_tokens: 1000,
-        temperature: 0.7,
+        max_tokens: 1500,
+        temperature: 0.8,
       }),
     });
 
