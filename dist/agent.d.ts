@@ -80,5 +80,13 @@ export declare class MastraCodeReviewAgent {
      * Security-focused analysis using Mastra workflow
      */
     securityAudit(code: string, language: string, filePath?: string): Promise<any>;
+    /**
+     * 智能聊天处理 - 核心对话功能
+     */
+    handleChat(message: string, conversationHistory?: any[], attachedCode?: string, fileName?: string): Promise<any>;
+    private buildChatContext;
+    private generateChatResponse;
+    private analyzeChatIntent;
+    private extractCodeFromMessage;
 }
 //# sourceMappingURL=agent.d.ts.map

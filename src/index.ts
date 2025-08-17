@@ -142,6 +142,41 @@ app.post('/api/explain-code', async (req, res) => {
   }
 });
 
+// 智能聊天端点
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, conversationHistory, attachedCode, fileName } = req.body;
+    
+    if (!message) {
+      logger.warn('Chat request missing message');
+      return res.status(400).json({ error: 'Message is required' });
+    }
+
+    logger.info('Processing chat message', { 
+      messageLength: message.length,
+      hasAttachedCode: !!attachedCode,
+      fileName,
+      historyLength: conversationHistory?.length || 0
+    });
+
+    // 调用Agent的智能聊天方法
+    const chatResponse = await agent.handleChat(message, conversationHistory, attachedCode, fileName);
+    
+    logger.info('Chat response generated', { 
+      responseLength: chatResponse.response?.length || 0,
+      needsAction: chatResponse.needsAction
+    });
+
+    res.json(chatResponse);
+  } catch (error) {
+    logger.error('Error in chat:', error);
+    res.status(500).json({ 
+      error: 'Failed to process chat message',
+      response: '抱歉，我现在无法处理你的消息。请稍后再试，或者直接分享代码让我分析。'
+    });
+  }
+});
+
 app.get('/api/supported-languages', (_req, res) => {
   res.json({
     languages: [

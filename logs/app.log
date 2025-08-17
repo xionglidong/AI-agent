@@ -1302,3 +1302,148 @@
   service: 'ai-code-review-agent',
   timestamp: '2025-08-17 21:15:39'
 }
+{
+  message: 'Registered Mastra tool: filesystem',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra tool: code_analyzer',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra tool: git_integration',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra tool: code_generator',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Initialized 4 Mastra tools',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra workflow: Comprehensive Code Review',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra workflow: Security Audit',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Registered Mastra workflow: Repository Analysis',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'Initialized 3 Mastra workflows',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'No API key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY environment variable.',
+  level: 'warn',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  message: 'WebSocket server started on port 3001',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  service: 'ai-code-review-agent',
+  port: 3000,
+  wsPort: 3001,
+  agent: 'CodeReviewAgent',
+  model: 'gpt-4',
+  environment: 'development',
+  dashboard: 'http://localhost:3000',
+  websocket: 'ws://localhost:3001',
+  level: 'info',
+  message: '🚀 Code Review AI Agent server started',
+  timestamp: '2025-08-17 21:42:15'
+}
+{
+  service: 'ai-code-review-agent',
+  messageLength: 17,
+  hasAttachedCode: false,
+  fileName: undefined,
+  historyLength: 0,
+  level: 'info',
+  message: 'Processing chat message',
+  timestamp: '2025-08-17 21:42:23'
+}
+{
+  service: 'ai-code-review-agent',
+  responseLength: 187,
+  needsAction: false,
+  level: 'info',
+  message: 'Chat response generated',
+  timestamp: '2025-08-17 21:42:23'
+}
+{
+  service: 'ai-code-review-agent',
+  method: 'POST',
+  url: '/api/chat',
+  status: 200,
+  duration: '20ms',
+  userAgent: 'curl/7.87.0',
+  ip: '::ffff:127.0.0.1',
+  level: 'info',
+  message: 'HTTP Request',
+  timestamp: '2025-08-17 21:42:23'
+}
+{
+  service: 'ai-code-review-agent',
+  messageLength: 55,
+  hasAttachedCode: false,
+  fileName: undefined,
+  historyLength: 0,
+  level: 'info',
+  message: 'Processing chat message',
+  timestamp: '2025-08-17 21:42:30'
+}
+{
+  service: 'ai-code-review-agent',
+  responseLength: 225,
+  needsAction: false,
+  level: 'info',
+  message: 'Chat response generated',
+  timestamp: '2025-08-17 21:42:30'
+}
+{
+  service: 'ai-code-review-agent',
+  method: 'POST',
+  url: '/api/chat',
+  status: 200,
+  duration: '3ms',
+  userAgent: 'curl/7.87.0',
+  ip: '::ffff:127.0.0.1',
+  level: 'info',
+  message: 'HTTP Request',
+  timestamp: '2025-08-17 21:42:30'
+}
+{
+  message: '🛑 Shutting down gracefully...',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 21:42:37'
+}

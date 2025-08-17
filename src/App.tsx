@@ -27,12 +27,12 @@ interface ChatState {
 }
 
 const EXAMPLE_PROMPTS = [
-  "分析这段JavaScript代码的问题",
-  "优化我的Python函数性能",
-  "解释这个算法的工作原理", 
-  "审查我的项目代码质量",
-  "检查代码安全漏洞",
-  "重构这段代码使其更易读"
+  "我的代码运行很慢，能帮我优化一下吗？",
+  "这个递归函数是怎么工作的？",
+  "帮我检查一下代码有没有安全问题",
+  "我想学习React Hooks，能给我一些例子吗？",
+  "这段代码有bug，但我找不出原因",
+  "如何重构这个函数让它更清晰？"
 ];
 
 export default function App() {
@@ -391,76 +391,51 @@ export default function App() {
     }));
 
     try {
-      let codeContent = '';
+      let attachedCode = '';
       let fileName = '';
 
       // 处理附件
       if (attachedFile) {
         fileName = attachedFile.name;
-        codeContent = await new Promise((resolve) => {
+        attachedCode = await new Promise((resolve) => {
           const reader = new FileReader();
           reader.onload = (e) => resolve(e.target?.result as string);
           reader.readAsText(attachedFile);
         });
-      } else {
-        // 从消息中提取代码
-        const extractedCode = extractCodeFromMessage(message);
-        if (extractedCode) {
-          codeContent = extractedCode;
-        }
       }
 
-      // 检测意图和语言
-      const intent = detectIntent(message, fileName);
-      
-      let apiResponse;
-      let responseText = '';
+      // 调用智能聊天API
+      const chatResponse = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          conversationHistory: chatState.messages.slice(-10), // 发送最近10条消息作为上下文
+          attachedCode: attachedCode || undefined,
+          fileName: fileName || undefined,
+        }),
+      });
 
-      if (codeContent && (intent.type === 'analyze' || intent.type === 'optimize' || intent.type === 'explain')) {
-        // 有代码内容，调用相应API
-        const payload = {
-          code: codeContent,
-          language: intent.language,
-          ...(intent.type === 'optimize' && { optimizationType: 'general' }),
-          ...(intent.type === 'explain' && { explanationLevel: 'intermediate' }),
-        };
-
-        apiResponse = await callAPI(intent.type, payload);
-        responseText = formatResponse(intent.type, apiResponse);
-      } else if (intent.type === 'repository') {
-        // 仓库分析
-        const payload = {
-          repositoryPath: message.includes('项目') ? '当前项目' : 'my-project',
-          includeTests: true,
-        };
-
-        apiResponse = await callAPI('repository', payload);
-        responseText = formatResponse('repository', apiResponse);
-      } else {
-        // 通用回复
-        responseText = `我理解你想要${intent.type === 'analyze' ? '分析代码' : 
-          intent.type === 'optimize' ? '优化代码' : 
-          intent.type === 'explain' ? '解释代码' : '审查项目'}。
-
-请提供代码内容，你可以：
-1. 直接在消息中使用代码块：\`\`\`javascript\n你的代码\n\`\`\`
-2. 使用📎按钮上传代码文件
-3. 粘贴代码片段
-
-我支持多种编程语言：JavaScript、Python、Java、C++、Go、Rust等。`;
+      if (!chatResponse.ok) {
+        throw new Error(`Chat API failed: ${chatResponse.statusText}`);
       }
 
-      // 添加助手回复
+      const chatResult = await chatResponse.json();
+
+      // 添加AI助手回复
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
-        content: responseText,
+        content: chatResult.response || '抱歉，我现在无法回答你的问题。',
         timestamp: Date.now(),
         metadata: {
-          analysisType: intent.type,
-          language: intent.language,
+          needsAction: chatResult.needsAction,
+          suggestedActions: chatResult.suggestedActions,
+          detectedLanguage: chatResult.detectedLanguage,
+          hasCode: chatResult.hasCode,
           fileName: fileName,
-          codeSnippet: codeContent ? codeContent.substring(0, 100) + '...' : undefined,
         },
       };
 
@@ -476,7 +451,21 @@ export default function App() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
-        content: `❌ 抱歉，处理你的请求时出现了错误：${error instanceof Error ? error.message : '未知错误'}\n\n请稍后再试，或者检查你的代码格式是否正确。`,
+        content: `❌ 抱歉，我在处理你的消息时遇到了问题：${error instanceof Error ? error.message : '未知错误'}
+
+让我尝试用其他方式帮助你：
+
+🔍 如果你有代码需要分析，请：
+- 直接粘贴代码片段
+- 使用 \`\`\`语言\n代码\n\`\`\` 格式
+- 或上传代码文件
+
+💬 如果你有编程问题，请：
+- 详细描述遇到的问题
+- 说明你想实现什么功能
+- 提供相关的错误信息
+
+我会尽力帮助你解决问题！`,
         timestamp: Date.now(),
       };
 
