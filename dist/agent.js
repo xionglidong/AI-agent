@@ -290,20 +290,12 @@ Include:
         }
         catch (error) {
             console.error('Error in handleChat:', error);
-            return {
-                response: `抱歉，我在处理你的请求时遇到了问题。让我尝试用其他方式帮助你：
-
-如果你有代码需要分析，请直接分享，我会检查：
-- 语法和风格问题
-- 潜在的性能问题
-- 安全风险
-- 改进建议
-
-如果你有编程问题，我也会尽力解答！有什么具体的代码问题吗？`,
-                needsAction: false,
-                suggestedActions: ['analyze', 'explain'],
-                error: error instanceof Error ? error.message : 'Unknown error'
-            };
+            // 如果没有API密钥，尝试基础聊天
+            if (!this.config.apiKey) {
+                return this.handleBasicChat(message, attachedCode);
+            }
+            // 如果有API密钥但出现错误，则抛出异常让上层处理
+            throw error;
         }
     }
     buildChatContext(message, history, attachedCode, fileName) {

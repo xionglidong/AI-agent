@@ -433,6 +433,11 @@ export default function App() {
 
       const chatResult = await chatResponse.json();
 
+      // 检查响应中是否包含错误信息
+      if (chatResult.error) {
+        throw new Error(chatResult.error);
+      }
+
       // 添加AI助手回复
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
