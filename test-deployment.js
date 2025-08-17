@@ -53,10 +53,31 @@ async function runTests(baseUrl) {
   }
 
   console.log('=' .repeat(50));
-  console.log('🎯 Test API with code analysis:');
+  console.log('🎯 Test all API endpoints:');
+  console.log('');
+  
+  console.log('1. 代码分析 (Code Analysis):');
   console.log(`curl -X POST ${baseUrl}/api/analyze-code \\`);
   console.log(`  -H "Content-Type: application/json" \\`);
   console.log(`  -d '{"code":"const x = 5; console.log(x)", "language":"javascript"}'`);
+  console.log('');
+  
+  console.log('2. 仓库审查 (Repository Review):');
+  console.log(`curl -X POST ${baseUrl}/api/review-repository \\`);
+  console.log(`  -H "Content-Type: application/json" \\`);
+  console.log(`  -d '{"repositoryPath":"my-project", "includeTests":true}'`);
+  console.log('');
+  
+  console.log('3. 代码优化 (Code Optimization):');
+  console.log(`curl -X POST ${baseUrl}/api/optimize-code \\`);
+  console.log(`  -H "Content-Type: application/json" \\`);
+  console.log(`  -d '{"code":"var x = 5; console.log(x); if(x === true) { return x; }", "language":"javascript", "optimizationType":"performance"}'`);
+  console.log('');
+  
+  console.log('4. 代码解释 (Code Explanation):');
+  console.log(`curl -X POST ${baseUrl}/api/explain-code \\`);
+  console.log(`  -H "Content-Type: application/json" \\`);
+  console.log(`  -d '{"code":"function fibonacci(n) { return n <= 1 ? n : fibonacci(n-1) + fibonacci(n-2); }", "language":"javascript", "explanationLevel":"intermediate"}'`);
 }
 
 // 获取命令行参数中的URL，默认使用本地开发服务器
