@@ -10,7 +10,7 @@ const codeAnalyzer_1 = require("./analyzer/codeAnalyzer");
 const securityChecker_1 = require("./analyzer/securityChecker");
 const performanceAnalyzer_1 = require("./analyzer/performanceAnalyzer");
 const advancedAnalyzer_1 = require("./analyzer/advancedAnalyzer");
-const integration_1 = require("./mastra/integration");
+const simplifiedIntegration_1 = require("./mastra/simplifiedIntegration");
 class MastraCodeReviewAgent {
     constructor(config) {
         this.config = config;
@@ -19,7 +19,7 @@ class MastraCodeReviewAgent {
         this.securityChecker = new securityChecker_1.SecurityChecker();
         this.performanceAnalyzer = new performanceAnalyzer_1.PerformanceAnalyzer();
         this.advancedAnalyzer = new advancedAnalyzer_1.AdvancedAnalyzer();
-        this.mastraIntegration = new integration_1.MastraIntegration();
+        this.mastraIntegration = new simplifiedIntegration_1.SimplifiedMastraIntegration();
     }
     getModel() {
         if (this.config.model.startsWith('gpt')) {
@@ -243,7 +243,7 @@ Include:
      * Create a custom workflow for specific analysis needs
      */
     createCustomWorkflow(workflow) {
-        this.mastraIntegration.createWorkflow(workflow);
+        this.mastraIntegration.createCustomWorkflow(workflow);
     }
     /**
      * Comprehensive analysis using Mastra workflow

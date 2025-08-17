@@ -1912,3 +1912,510 @@
   service: 'ai-code-review-agent',
   timestamp: '2025-08-17 22:11:27'
 }
+{
+  message: 'Simplified Mastra framework initialized',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 23:43:02'
+}
+{
+  message: 'Created 4 Mastra tools',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 23:43:02'
+}
+{
+  message: 'No API key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY environment variable.',
+  level: 'warn',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 23:43:02'
+}
+{
+  message: 'WebSocket server started on port 3001',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 23:43:02'
+}
+{
+  service: 'ai-code-review-agent',
+  port: 3000,
+  wsPort: 3001,
+  agent: 'CodeReviewAgent',
+  model: 'gpt-4',
+  environment: 'development',
+  dashboard: 'http://localhost:3000',
+  websocket: 'ws://localhost:3001',
+  level: 'info',
+  message: '🚀 Code Review AI Agent server started',
+  timestamp: '2025-08-17 23:43:02'
+}
+{
+  service: 'ai-code-review-agent',
+  messageLength: 15,
+  hasAttachedCode: false,
+  fileName: undefined,
+  historyLength: 0,
+  level: 'info',
+  message: 'Processing chat message',
+  timestamp: '2025-08-17 23:43:11'
+}
+{
+  service: 'ai-code-review-agent',
+  responseLength: 268,
+  needsAction: false,
+  level: 'info',
+  message: 'Chat response generated',
+  timestamp: '2025-08-17 23:43:11'
+}
+{
+  service: 'ai-code-review-agent',
+  method: 'POST',
+  url: '/api/chat',
+  status: 200,
+  duration: '21ms',
+  userAgent: 'curl/7.87.0',
+  ip: '::ffff:127.0.0.1',
+  level: 'info',
+  message: 'HTTP Request',
+  timestamp: '2025-08-17 23:43:11'
+}
+{
+  service: 'ai-code-review-agent',
+  language: 'javascript',
+  filePath: undefined,
+  codeLength: 34,
+  level: 'info',
+  message: 'Starting code analysis',
+  timestamp: '2025-08-17 23:43:18'
+}
+{
+  service: 'ai-code-review-agent',
+  name: 'AI_RetryError',
+  cause: undefined,
+  reason: 'maxRetriesExceeded',
+  errors: [
+    APICallError [AI_APICallError]: Cannot connect to API: Connect Timeout Error
+        at postToApi (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/node_modules/@ai-sdk/provider-utils/dist/index.js:446:15)
+        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at async OpenAIChatLanguageModel.doGenerate (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/dist/index.js:390:50)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2341:33)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async _retryWithExponentialBackoff (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:171:12)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2309:34)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async MastraCodeReviewAgent.generateAssessment (/Users/xld/Desktop/project/AI-agent/dist/agent.js:76:24)
+        at async MastraCodeReviewAgent.analyzeCode (/Users/xld/Desktop/project/AI-agent/dist/agent.js:51:28) {
+      cause: ConnectTimeoutError: Connect Timeout Error
+          at onConnectTimeout (node:internal/deps/undici/undici:8422:28)
+          at node:internal/deps/undici/undici:8380:50
+          at Immediate._onImmediate (node:internal/deps/undici/undici:8411:13)
+          at process.processImmediate (node:internal/timers:476:21) {
+        code: 'UND_ERR_CONNECT_TIMEOUT'
+      },
+      url: 'https://api.openai.com/v1/chat/completions',
+      requestBodyValues: {
+        model: 'gpt-4',
+        logit_bias: undefined,
+        logprobs: undefined,
+        top_logprobs: undefined,
+        user: undefined,
+        parallel_tool_calls: undefined,
+        max_tokens: undefined,
+        temperature: 0,
+        top_p: undefined,
+        frequency_penalty: undefined,
+        presence_penalty: undefined,
+        stop: undefined,
+        seed: undefined,
+        max_completion_tokens: undefined,
+        store: undefined,
+        metadata: undefined,
+        response_format: undefined,
+        messages: [
+          {
+            role: 'user',
+            content: 'You are a senior code reviewer. Analyze this javascript code and provide:\n' +
+              '1. A comprehensive summary of the code quality\n' +
+              '2. Optimized version of the code (if improvements are possible)\n' +
+              '\n' +
+              'Code:\n' +
+              '```javascript\n' +
+              'var x = 5; eval("console.log(x)");\n' +
+              '```\n' +
+              '\n' +
+              'Detected Issues:\n' +
+              '- suggestion (low): console.log found - should be removed in production\\n- style (medium): Use let or const instead of var\\n- security (critical): Use of eval() is dangerous and can lead to code injection\n' +
+              '\n' +
+              '\n' +
+              '\n' +
+              'Provide your analysis focusing on code quality, maintainability, and best practices.'
+          }
+        ],
+        tool_choice: { type: 'function', function: { name: 'json' } },
+        tools: [
+          {
+            type: 'function',
+            function: {
+              name: 'json',
+              description: 'Respond with a JSON object.',
+              parameters: {
+                type: 'object',
+                properties: {
+                  summary: {
+                    type: 'string',
+                    description: 'Comprehensive summary of code quality and recommendations'
+                  },
+                  optimizedCode: {
+                    type: 'string',
+                    description: 'Improved version of the code if optimizations are possible'
+                  },
+                  additionalSuggestions: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Additional suggestions for improvement'
+                  }
+                },
+                required: [ 'summary', 'additionalSuggestions' ],
+                additionalProperties: false,
+                '$schema': 'http://json-schema.org/draft-07/schema#'
+              },
+              strict: undefined
+            }
+          }
+        ]
+      },
+      statusCode: undefined,
+      responseHeaders: undefined,
+      responseBody: undefined,
+      isRetryable: true,
+      data: undefined,
+      [Symbol(vercel.ai.error)]: true,
+      [Symbol(vercel.ai.error.AI_APICallError)]: true
+    },
+    APICallError [AI_APICallError]: Cannot connect to API: Connect Timeout Error
+        at postToApi (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/node_modules/@ai-sdk/provider-utils/dist/index.js:446:15)
+        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at async OpenAIChatLanguageModel.doGenerate (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/dist/index.js:390:50)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2341:33)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async _retryWithExponentialBackoff (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:171:12)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2309:34)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async MastraCodeReviewAgent.generateAssessment (/Users/xld/Desktop/project/AI-agent/dist/agent.js:76:24)
+        at async MastraCodeReviewAgent.analyzeCode (/Users/xld/Desktop/project/AI-agent/dist/agent.js:51:28) {
+      cause: ConnectTimeoutError: Connect Timeout Error
+          at onConnectTimeout (node:internal/deps/undici/undici:8422:28)
+          at node:internal/deps/undici/undici:8380:50
+          at Immediate._onImmediate (node:internal/deps/undici/undici:8411:13)
+          at process.processImmediate (node:internal/timers:476:21) {
+        code: 'UND_ERR_CONNECT_TIMEOUT'
+      },
+      url: 'https://api.openai.com/v1/chat/completions',
+      requestBodyValues: {
+        model: 'gpt-4',
+        logit_bias: undefined,
+        logprobs: undefined,
+        top_logprobs: undefined,
+        user: undefined,
+        parallel_tool_calls: undefined,
+        max_tokens: undefined,
+        temperature: 0,
+        top_p: undefined,
+        frequency_penalty: undefined,
+        presence_penalty: undefined,
+        stop: undefined,
+        seed: undefined,
+        max_completion_tokens: undefined,
+        store: undefined,
+        metadata: undefined,
+        response_format: undefined,
+        messages: [
+          {
+            role: 'user',
+            content: 'You are a senior code reviewer. Analyze this javascript code and provide:\n' +
+              '1. A comprehensive summary of the code quality\n' +
+              '2. Optimized version of the code (if improvements are possible)\n' +
+              '\n' +
+              'Code:\n' +
+              '```javascript\n' +
+              'var x = 5; eval("console.log(x)");\n' +
+              '```\n' +
+              '\n' +
+              'Detected Issues:\n' +
+              '- suggestion (low): console.log found - should be removed in production\\n- style (medium): Use let or const instead of var\\n- security (critical): Use of eval() is dangerous and can lead to code injection\n' +
+              '\n' +
+              '\n' +
+              '\n' +
+              'Provide your analysis focusing on code quality, maintainability, and best practices.'
+          }
+        ],
+        tool_choice: { type: 'function', function: { name: 'json' } },
+        tools: [
+          {
+            type: 'function',
+            function: {
+              name: 'json',
+              description: 'Respond with a JSON object.',
+              parameters: {
+                type: 'object',
+                properties: {
+                  summary: {
+                    type: 'string',
+                    description: 'Comprehensive summary of code quality and recommendations'
+                  },
+                  optimizedCode: {
+                    type: 'string',
+                    description: 'Improved version of the code if optimizations are possible'
+                  },
+                  additionalSuggestions: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Additional suggestions for improvement'
+                  }
+                },
+                required: [ 'summary', 'additionalSuggestions' ],
+                additionalProperties: false,
+                '$schema': 'http://json-schema.org/draft-07/schema#'
+              },
+              strict: undefined
+            }
+          }
+        ]
+      },
+      statusCode: undefined,
+      responseHeaders: undefined,
+      responseBody: undefined,
+      isRetryable: true,
+      data: undefined,
+      [Symbol(vercel.ai.error)]: true,
+      [Symbol(vercel.ai.error.AI_APICallError)]: true
+    },
+    APICallError [AI_APICallError]: Cannot connect to API: Connect Timeout Error
+        at postToApi (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/node_modules/@ai-sdk/provider-utils/dist/index.js:446:15)
+        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at async OpenAIChatLanguageModel.doGenerate (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/dist/index.js:390:50)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2341:33)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async _retryWithExponentialBackoff (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:171:12)
+        at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2309:34)
+        at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+        at async MastraCodeReviewAgent.generateAssessment (/Users/xld/Desktop/project/AI-agent/dist/agent.js:76:24)
+        at async MastraCodeReviewAgent.analyzeCode (/Users/xld/Desktop/project/AI-agent/dist/agent.js:51:28) {
+      cause: ConnectTimeoutError: Connect Timeout Error
+          at onConnectTimeout (node:internal/deps/undici/undici:8422:28)
+          at node:internal/deps/undici/undici:8380:50
+          at Immediate._onImmediate (node:internal/deps/undici/undici:8411:13)
+          at process.processImmediate (node:internal/timers:476:21) {
+        code: 'UND_ERR_CONNECT_TIMEOUT'
+      },
+      url: 'https://api.openai.com/v1/chat/completions',
+      requestBodyValues: {
+        model: 'gpt-4',
+        logit_bias: undefined,
+        logprobs: undefined,
+        top_logprobs: undefined,
+        user: undefined,
+        parallel_tool_calls: undefined,
+        max_tokens: undefined,
+        temperature: 0,
+        top_p: undefined,
+        frequency_penalty: undefined,
+        presence_penalty: undefined,
+        stop: undefined,
+        seed: undefined,
+        max_completion_tokens: undefined,
+        store: undefined,
+        metadata: undefined,
+        response_format: undefined,
+        messages: [
+          {
+            role: 'user',
+            content: 'You are a senior code reviewer. Analyze this javascript code and provide:\n' +
+              '1. A comprehensive summary of the code quality\n' +
+              '2. Optimized version of the code (if improvements are possible)\n' +
+              '\n' +
+              'Code:\n' +
+              '```javascript\n' +
+              'var x = 5; eval("console.log(x)");\n' +
+              '```\n' +
+              '\n' +
+              'Detected Issues:\n' +
+              '- suggestion (low): console.log found - should be removed in production\\n- style (medium): Use let or const instead of var\\n- security (critical): Use of eval() is dangerous and can lead to code injection\n' +
+              '\n' +
+              '\n' +
+              '\n' +
+              'Provide your analysis focusing on code quality, maintainability, and best practices.'
+          }
+        ],
+        tool_choice: { type: 'function', function: { name: 'json' } },
+        tools: [
+          {
+            type: 'function',
+            function: {
+              name: 'json',
+              description: 'Respond with a JSON object.',
+              parameters: {
+                type: 'object',
+                properties: {
+                  summary: {
+                    type: 'string',
+                    description: 'Comprehensive summary of code quality and recommendations'
+                  },
+                  optimizedCode: {
+                    type: 'string',
+                    description: 'Improved version of the code if optimizations are possible'
+                  },
+                  additionalSuggestions: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Additional suggestions for improvement'
+                  }
+                },
+                required: [ 'summary', 'additionalSuggestions' ],
+                additionalProperties: false,
+                '$schema': 'http://json-schema.org/draft-07/schema#'
+              },
+              strict: undefined
+            }
+          }
+        ]
+      },
+      statusCode: undefined,
+      responseHeaders: undefined,
+      responseBody: undefined,
+      isRetryable: true,
+      data: undefined,
+      [Symbol(vercel.ai.error)]: true,
+      [Symbol(vercel.ai.error.AI_APICallError)]: true
+    }
+  ],
+  lastError: APICallError [AI_APICallError]: Cannot connect to API: Connect Timeout Error
+      at postToApi (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/node_modules/@ai-sdk/provider-utils/dist/index.js:446:15)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async OpenAIChatLanguageModel.doGenerate (/Users/xld/Desktop/project/AI-agent/node_modules/@ai-sdk/openai/dist/index.js:390:50)
+      at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2341:33)
+      at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+      at async _retryWithExponentialBackoff (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:171:12)
+      at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2309:34)
+      at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22
+      at async MastraCodeReviewAgent.generateAssessment (/Users/xld/Desktop/project/AI-agent/dist/agent.js:76:24)
+      at async MastraCodeReviewAgent.analyzeCode (/Users/xld/Desktop/project/AI-agent/dist/agent.js:51:28) {
+    cause: ConnectTimeoutError: Connect Timeout Error
+        at onConnectTimeout (node:internal/deps/undici/undici:8422:28)
+        at node:internal/deps/undici/undici:8380:50
+        at Immediate._onImmediate (node:internal/deps/undici/undici:8411:13)
+        at process.processImmediate (node:internal/timers:476:21) {
+      code: 'UND_ERR_CONNECT_TIMEOUT'
+    },
+    url: 'https://api.openai.com/v1/chat/completions',
+    requestBodyValues: {
+      model: 'gpt-4',
+      logit_bias: undefined,
+      logprobs: undefined,
+      top_logprobs: undefined,
+      user: undefined,
+      parallel_tool_calls: undefined,
+      max_tokens: undefined,
+      temperature: 0,
+      top_p: undefined,
+      frequency_penalty: undefined,
+      presence_penalty: undefined,
+      stop: undefined,
+      seed: undefined,
+      max_completion_tokens: undefined,
+      store: undefined,
+      metadata: undefined,
+      response_format: undefined,
+      messages: [
+        {
+          role: 'user',
+          content: 'You are a senior code reviewer. Analyze this javascript code and provide:\n' +
+            '1. A comprehensive summary of the code quality\n' +
+            '2. Optimized version of the code (if improvements are possible)\n' +
+            '\n' +
+            'Code:\n' +
+            '```javascript\n' +
+            'var x = 5; eval("console.log(x)");\n' +
+            '```\n' +
+            '\n' +
+            'Detected Issues:\n' +
+            '- suggestion (low): console.log found - should be removed in production\\n- style (medium): Use let or const instead of var\\n- security (critical): Use of eval() is dangerous and can lead to code injection\n' +
+            '\n' +
+            '\n' +
+            '\n' +
+            'Provide your analysis focusing on code quality, maintainability, and best practices.'
+        }
+      ],
+      tool_choice: { type: 'function', function: { name: 'json' } },
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: 'json',
+            description: 'Respond with a JSON object.',
+            parameters: {
+              type: 'object',
+              properties: {
+                summary: {
+                  type: 'string',
+                  description: 'Comprehensive summary of code quality and recommendations'
+                },
+                optimizedCode: {
+                  type: 'string',
+                  description: 'Improved version of the code if optimizations are possible'
+                },
+                additionalSuggestions: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description: 'Additional suggestions for improvement'
+                }
+              },
+              required: [ 'summary', 'additionalSuggestions' ],
+              additionalProperties: false,
+              '$schema': 'http://json-schema.org/draft-07/schema#'
+            },
+            strict: undefined
+          }
+        }
+      ]
+    },
+    statusCode: undefined,
+    responseHeaders: undefined,
+    responseBody: undefined,
+    isRetryable: true,
+    data: undefined,
+    [Symbol(vercel.ai.error)]: true,
+    [Symbol(vercel.ai.error.AI_APICallError)]: true
+  },
+  level: 'error',
+  message: 'Error analyzing code: Failed after 3 attempts. Last error: Cannot connect to API: Connect Timeout Error',
+  stack: 'AI_RetryError: Failed after 3 attempts. Last error: Cannot connect to API: Connect Timeout Error\n' +
+    '    at _retryWithExponentialBackoff (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:183:13)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+    '    at async fn (/Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:2309:34)\n' +
+    '    at async /Users/xld/Desktop/project/AI-agent/node_modules/ai/dist/index.js:343:22\n' +
+    '    at async MastraCodeReviewAgent.generateAssessment (/Users/xld/Desktop/project/AI-agent/dist/agent.js:76:24)\n' +
+    '    at async MastraCodeReviewAgent.analyzeCode (/Users/xld/Desktop/project/AI-agent/dist/agent.js:51:28)\n' +
+    '    at async /Users/xld/Desktop/project/AI-agent/dist/index.js:99:24',
+  timestamp: '2025-08-17 23:43:55',
+  [Symbol(vercel.ai.error)]: true,
+  [Symbol(vercel.ai.error.AI_RetryError)]: true
+}
+{
+  service: 'ai-code-review-agent',
+  method: 'POST',
+  url: '/api/analyze-code',
+  status: 500,
+  duration: '36131ms',
+  userAgent: 'curl/7.87.0',
+  ip: '::ffff:127.0.0.1',
+  level: 'warn',
+  message: 'HTTP Request',
+  timestamp: '2025-08-17 23:43:55'
+}
+{
+  message: '🛑 Shutting down gracefully...',
+  level: 'info',
+  service: 'ai-code-review-agent',
+  timestamp: '2025-08-17 23:44:01'
+}

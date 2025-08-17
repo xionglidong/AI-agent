@@ -7,7 +7,7 @@ import { CodeAnalyzer } from './analyzer/codeAnalyzer';
 import { SecurityChecker } from './analyzer/securityChecker';
 import { PerformanceAnalyzer } from './analyzer/performanceAnalyzer';
 import { AdvancedAnalyzer } from './analyzer/advancedAnalyzer';
-import { MastraIntegration } from './mastra/integration';
+import { SimplifiedMastraIntegration } from './mastra/simplifiedIntegration';
 
 export interface AgentConfig {
   name: string;
@@ -44,7 +44,7 @@ export class MastraCodeReviewAgent {
   private securityChecker: SecurityChecker;
   private performanceAnalyzer: PerformanceAnalyzer;
   private advancedAnalyzer: AdvancedAnalyzer;
-  private mastraIntegration: MastraIntegration;
+  private mastraIntegration: SimplifiedMastraIntegration;
 
   constructor(config: AgentConfig) {
     this.config = config;
@@ -53,7 +53,7 @@ export class MastraCodeReviewAgent {
     this.securityChecker = new SecurityChecker();
     this.performanceAnalyzer = new PerformanceAnalyzer();
     this.advancedAnalyzer = new AdvancedAnalyzer();
-    this.mastraIntegration = new MastraIntegration();
+    this.mastraIntegration = new SimplifiedMastraIntegration();
   }
 
   private getModel() {
@@ -330,7 +330,7 @@ Include:
    * Create a custom workflow for specific analysis needs
    */
   createCustomWorkflow(workflow: any): void {
-    this.mastraIntegration.createWorkflow(workflow);
+    this.mastraIntegration.createCustomWorkflow(workflow);
   }
 
   /**

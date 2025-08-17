@@ -34,17 +34,17 @@ export declare const MastraWorkflowSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         name: string;
         id: string;
+        tool: string;
         parameters: {} & {
             [k: string]: unknown;
         };
-        tool: string;
     }, {
         name: string;
         id: string;
+        tool: string;
         parameters: {} & {
             [k: string]: unknown;
         };
-        tool: string;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     name: string;
@@ -53,10 +53,10 @@ export declare const MastraWorkflowSchema: z.ZodObject<{
     steps: {
         name: string;
         id: string;
+        tool: string;
         parameters: {} & {
             [k: string]: unknown;
         };
-        tool: string;
     }[];
 }, {
     name: string;
@@ -65,10 +65,10 @@ export declare const MastraWorkflowSchema: z.ZodObject<{
     steps: {
         name: string;
         id: string;
+        tool: string;
         parameters: {} & {
             [k: string]: unknown;
         };
-        tool: string;
     }[];
 }>;
 export type MastraWorkflow = z.infer<typeof MastraWorkflowSchema>;
