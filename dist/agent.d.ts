@@ -88,5 +88,9 @@ export declare class MastraCodeReviewAgent {
     private generateChatResponse;
     private analyzeChatIntent;
     private extractCodeFromMessage;
+    /**
+     * 基础聊天处理 - 无需API密钥的简单对话
+     */
+    private handleBasicChat;
 }
 //# sourceMappingURL=agent.d.ts.map

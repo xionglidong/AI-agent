@@ -271,20 +271,8 @@ Include:
     async handleChat(message, conversationHistory = [], attachedCode, fileName) {
         try {
             if (!this.config.apiKey) {
-                return {
-                    response: `我理解你的问题："${message}"
-
-不过目前没有配置AI API密钥，我只能提供基础的代码分析功能。要获得完整的AI对话体验，请在环境变量中设置 OPENAI_API_KEY 或 ANTHROPIC_API_KEY。
-
-我仍然可以帮你：
-- 分析代码语法和风格问题
-- 检测基础的安全风险  
-- 提供编程最佳实践建议
-
-请分享你的代码，我来为你分析！`,
-                    needsAction: false,
-                    suggestedActions: ['analyze', 'explain']
-                };
+                // 即使没有API密钥，也尝试提供基本的回复
+                return this.handleBasicChat(message, attachedCode);
             }
             // 构建智能对话上下文
             const context = this.buildChatContext(message, conversationHistory, attachedCode, fileName);
@@ -319,15 +307,24 @@ Include:
         }
     }
     buildChatContext(message, history, attachedCode, fileName) {
-        let context = `你是一个专业且友好的AI代码助手。你的特长包括：
+        let context = `你是一个智能、友好且多才多艺的AI助手。你既是编程专家，也能进行日常对话。
 
-🔍 **代码分析**: 检测语法错误、代码风格、性能问题
-🚀 **代码优化**: 提供重构建议和性能改进方案  
-📚 **代码解释**: 详细解释代码逻辑和编程概念
-🛡️ **安全审查**: 识别安全漏洞和风险
-📁 **项目审查**: 分析项目结构和整体质量
+🎯 **编程专长**:
+- 代码分析、优化、解释和调试
+- 多种编程语言和框架的专业知识
+- 软件架构和最佳实践建议
+- 技术问题解答和学习指导
 
-请用友好、专业且易懂的语气回答。当用户提供代码时，主动给出具体的分析和建议。
+💬 **日常对话能力**:
+- 回答各种知识性问题
+- 提供生活建议和帮助
+- 进行轻松愉快的闲聊
+- 解答学习、工作、生活等各方面问题
+
+请根据用户的问题类型，提供相应的帮助：
+- 如果是编程相关问题，展现你的技术专长
+- 如果是日常对话，保持友好自然的交流风格
+- 始终保持耐心、有帮助且富有人情味
 
 对话历史：`;
         // 添加最近的对话历史（最多10轮）
@@ -438,6 +435,150 @@ Include:
             };
         }
         return null;
+    }
+    /**
+     * 基础聊天处理 - 无需API密钥的简单对话
+     */
+    handleBasicChat(message, attachedCode) {
+        const lowerMessage = message.toLowerCase();
+        // 问候语
+        if (/^(你好|hi|hello|嗨|早上好|下午好|晚上好)/.test(lowerMessage)) {
+            return {
+                response: `你好！👋 很高兴见到你！
+
+虽然我现在没有配置完整的AI API密钥，但我仍然可以：
+
+🔍 **基础代码分析**：
+- 检查语法和风格问题
+- 识别常见的编程错误
+- 提供基本的安全检查
+
+💬 **简单对话**：
+- 回答一些基本问题
+- 提供编程学习建议
+- 分享一些实用技巧
+
+要获得更智能的对话体验，请设置 OPENAI_API_KEY 或 ANTHROPIC_API_KEY 环境变量。
+
+有什么我可以帮你的吗？可以分享代码让我分析，或者问一些编程相关的问题！😊`,
+                needsAction: false,
+                suggestedActions: ['analyze', 'explain']
+            };
+        }
+        // 感谢语
+        if (/谢谢|thanks|thank you/i.test(lowerMessage)) {
+            return {
+                response: `不客气！😊 很高兴能帮到你！
+
+如果你还有其他问题，随时可以问我：
+- 代码分析和优化建议
+- 编程学习方向
+- 技术问题解答
+
+我会尽力帮助你的！`,
+                needsAction: false,
+                suggestedActions: ['analyze']
+            };
+        }
+        // 编程学习相关
+        if (/学习|learn|入门|开始|怎么|如何/i.test(lowerMessage) &&
+            (/编程|programming|代码|code|javascript|python|java|react|vue/i.test(lowerMessage))) {
+            return {
+                response: `很棒的问题！学习编程是一个很有意义的旅程。📚
+
+**编程学习建议**：
+
+🎯 **选择语言**：
+- **JavaScript** - 前端开发，容易上手
+- **Python** - 数据科学，语法简洁
+- **Java** - 企业开发，就业机会多
+
+📖 **学习路径**：
+1. 掌握基础语法
+2. 做小项目练手
+3. 学习框架和工具
+4. 参与开源项目
+
+💡 **实用建议**：
+- 每天坚持写代码
+- 多看优秀的开源代码
+- 加入编程社区交流
+
+你想学习哪种编程语言？我可以给你更具体的建议！`,
+                needsAction: false,
+                suggestedActions: ['explain', 'analyze']
+            };
+        }
+        // 天气或日常话题
+        if (/天气|weather|今天|心情|怎么样/i.test(lowerMessage)) {
+            return {
+                response: `谢谢你的关心！😊 
+
+虽然我是AI助手，没法感受天气，但我很乐意和你聊天！
+
+**今天是编程的好日子**：
+- 可以学习新的技术
+- 写一些有趣的代码
+- 解决一些技术挑战
+
+你今天有什么编程计划吗？或者遇到了什么技术问题？我很乐意帮助你！
+
+如果你想要更智能的日常对话，建议配置AI API密钥，那样我就能更好地陪你聊天了！`,
+                needsAction: false,
+                suggestedActions: ['explain']
+            };
+        }
+        // 代码相关问题
+        if (attachedCode || /代码|code|bug|错误|问题|分析|优化/i.test(lowerMessage)) {
+            return {
+                response: `我很乐意帮你分析代码！💻
+
+${attachedCode ? '我看到你上传了代码文件，' : ''}请分享你的代码，我可以：
+
+🔍 **基础分析**：
+- 检查语法错误
+- 发现常见问题
+- 提供风格建议
+
+🚀 **优化建议**：
+- 性能改进提示
+- 代码重构建议
+- 最佳实践指导
+
+请把代码贴出来，使用这种格式：
+\`\`\`javascript
+你的代码
+\`\`\`
+
+或者直接上传代码文件，我来为你分析！`,
+                needsAction: true,
+                suggestedActions: ['analyze', 'optimize']
+            };
+        }
+        // 默认回复
+        return {
+            response: `我理解你想说："${message}" 
+
+虽然我现在没有完整的AI对话能力（需要配置API密钥），但我仍然可以帮你：
+
+🔧 **编程相关**：
+- 代码分析和错误检查
+- 编程学习建议
+- 技术问题解答
+
+💬 **简单对话**：
+- 回答基本问题
+- 编程话题讨论
+
+你可以：
+1. 分享代码让我分析
+2. 问一些编程相关的问题  
+3. 或者配置 OPENAI_API_KEY 获得更智能的对话体验
+
+有什么我可以帮你的吗？😊`,
+            needsAction: false,
+            suggestedActions: ['analyze', 'explain']
+        };
     }
 }
 exports.MastraCodeReviewAgent = MastraCodeReviewAgent;
