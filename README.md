@@ -72,8 +72,20 @@ npm run web
 - API 服务: http://localhost:3000
 - WebSocket: ws://localhost:3001
 
-### Docker 部署
+### 🚀 部署选项
 
+#### Cloudflare Pages（推荐 - 免费）
+```bash
+# 1. 构建前端
+npm run build:pages
+
+# 2. 部署到 Cloudflare Pages
+# - 构建命令: npm run build:pages  
+# - 输出目录: web-dist
+# - 设置 OPENAI_API_KEY 环境变量
+```
+
+#### Docker 部署（完整功能）
 ```bash
 # 使用 Docker Compose 快速部署
 docker-compose up -d
@@ -82,6 +94,8 @@ docker-compose up -d
 docker build -t ai-code-review-agent .
 docker run -p 3000:3000 -p 3001:3001 ai-code-review-agent
 ```
+
+> 📖 **详细部署指南**: 查看 [DEPLOY.md](DEPLOY.md) 获取完整的部署说明
 
 ## 📖 使用指南
 

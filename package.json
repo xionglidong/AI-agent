@@ -9,6 +9,7 @@
     "start:dev": "tsx src/index.ts",
     "build": "tsc -p tsconfig.build.json",
     "build:all": "npm run build && npm run web:build",
+    "build:pages": "npm run web:build",
     "web": "vite",
     "web:build": "vite build",
     "web:preview": "vite preview",

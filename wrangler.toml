@@ -1,0 +1,10 @@
+name = "ai-code-review-agent"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "web-dist"
+
+[env.production.vars]
+AI_MODEL = "gpt-3.5-turbo"
+
+# Add your API keys as secrets using:
+# wrangler pages secret put OPENAI_API_KEY
+# wrangler pages secret put ANTHROPIC_API_KEY
