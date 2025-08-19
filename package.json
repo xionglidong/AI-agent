@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@mastra/core": "latest",
+    "@mastra/openai": "latest"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
