@@ -1,6 +1,9 @@
-name = "cf-ai-agent"
-main = "src/index.ts"
+name = "ai-agent"
 compatibility_date = "2025-08-18"
 
 [vars]
-OPENAI_API_KEY = "你的OpenAI Key"
+OPENAI_API_KEY = "your-openai-api-key"
+
+[site]
+bucket = "./dist"
+entry-point = "functions"
