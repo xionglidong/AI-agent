@@ -1,4 +1,4 @@
-// src/mastra/tools/translate.ts
+// functions/mastra/tools/translate.ts
 import { Tool } from "mastra";
 import { z } from "zod";
 

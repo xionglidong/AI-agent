@@ -6,5 +6,11 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist'
+  },
+  // 确保 Vite 不会尝试处理 functions 目录
+  server: {
+    fs: {
+      deny: ['functions/**']
+    }
   }
 })

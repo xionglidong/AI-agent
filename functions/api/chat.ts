@@ -1,6 +1,6 @@
 // functions/api/chat.ts
 import { graphql, buildSchema } from "graphql";
-import { chatAgent } from "../../src/mastra/agent";
+import { chatAgent } from "../mastra/agent";
 
 const schema = buildSchema(`
   type Query {

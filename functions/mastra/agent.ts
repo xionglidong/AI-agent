@@ -1,4 +1,4 @@
-// src/mastra/agent.ts
+// functions/mastra/agent.ts
 import { Agent } from "mastra";
 import { duckDuckGoTool } from "./tools/duckduckgo";
 import { weatherTool } from "./tools/weather";

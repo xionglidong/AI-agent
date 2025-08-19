@@ -1,4 +1,4 @@
-// src/mastra/tools/duckduckgo.ts
+// functions/mastra/tools/duckduckgo.ts
 import { Tool } from "mastra";
 import { z } from "zod";
 

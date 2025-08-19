@@ -1,4 +1,4 @@
-// src/mastra/tools/weather.ts
+// functions/mastra/tools/weather.ts
 import { Tool } from "mastra";
 import { z } from "zod";
 
