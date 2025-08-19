@@ -1,9 +1,9 @@
 // src/mastra/tools/translate.ts
-import { createTool } from "@mastra/core";
+import { Tool } from "mastra";
 import { z } from "zod";
 
-export const translateTool = createTool({
-  id: "translate",
+export const translateTool = new Tool({
+  name: "translate",
   description: "将文本翻译成指定语言",
   inputSchema: z.object({
     text: z.string(),

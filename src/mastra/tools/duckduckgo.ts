@@ -1,13 +1,13 @@
 // src/mastra/tools/duckduckgo.ts
-import { createTool } from "@mastra/core";
+import { Tool } from "mastra";
 import { z } from "zod";
 
-export const duckDuckGoTool = createTool({
-  id: "duckduckgo_search",
-  description: "使用 DuckDuckGo 搜索并返回简要信息",
-  inputSchema: z.object({
-    query: z.string(),
-  }),
+export const duckDuckGoTool = new Tool({
+    name: "duckduckgo_search",
+    description: "使用 DuckDuckGo 搜索并返回简要信息",
+    inputSchema: z.object({
+        query: z.string(),
+    }),
   execute: async ({ context }) => {
     const { query } = context;
     const res = await fetch(

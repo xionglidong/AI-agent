@@ -1,9 +1,9 @@
 // src/mastra/tools/weather.ts
-import { createTool } from "@mastra/core";
+import { Tool } from "mastra";
 import { z } from "zod";
 
-export const weatherTool = createTool({
-  id: "weather",
+export const weatherTool = new Tool({
+  name: "weather",
   description: "查询指定城市的实时天气",
   inputSchema: z.object({
     city: z.string(),

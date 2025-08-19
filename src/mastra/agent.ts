@@ -1,5 +1,5 @@
 // src/mastra/agent.ts
-import { Agent } from "@mastra/core";
+import { Agent } from "mastra";
 import { duckDuckGoTool } from "./tools/duckduckgo";
 import { weatherTool } from "./tools/weather";
 import { translateTool } from "./tools/translate";
