@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler pages dev .",
-    "build": "echo 'Cloudflare Pages Functions will be built automatically'",
-    "preview": "wrangler pages dev ."
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@mastra/core": "^0.1.0",
