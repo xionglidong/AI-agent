@@ -1,0 +1,6 @@
+name = "cf-ai-agent"
+main = "src/index.ts"
+compatibility_date = "2025-08-18"
+
+[vars]
+OPENAI_API_KEY = "你的OpenAI Key"
