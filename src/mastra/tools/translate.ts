@@ -1,5 +1,5 @@
 // src/mastra/tools/translate.ts
-import { createTool } from "@mastra/core/tools";
+import { createTool } from "@mastra/core";
 import { z } from "zod";
 
 export const translateTool = createTool({

@@ -1,5 +1,5 @@
 // src/mastra/tools/weather.ts
-import { createTool } from "@mastra/core/tools";
+import { createTool } from "@mastra/core";
 import { z } from "zod";
 
 export const weatherTool = createTool({

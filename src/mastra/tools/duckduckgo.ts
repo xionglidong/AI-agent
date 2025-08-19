@@ -1,5 +1,5 @@
 // src/mastra/tools/duckduckgo.ts
-import { createTool } from "@mastra/core/tools";
+import { createTool } from "@mastra/core";
 import { z } from "zod";
 
 export const duckDuckGoTool = createTool({
