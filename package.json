@@ -1,27 +1,20 @@
 {
-  "name": "my-cf-mastra-agent",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
+  "name": "my-mastra-agent",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "mastra dev",
-    "build": "mastra build",
-    "deploy": "wrangler deploy --config .mastra/output/wrangler.json",
-    "cf:dev": "wrangler dev --config .mastra/output/wrangler.json",
-    "cf:login": "wrangler login",
-    "postbuild": "echo 'Build complete. Use wrangler deploy with .mastra/output/wrangler.json'"
-  },
-  "engines": {
-    "node": ">=18"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@mastra/core": "latest",
-    "@mastra/deployer-cloudflare": "latest",
-    "@ai-sdk/openai": "latest"
+    "@mastra/openai": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
     "typescript": "^5.4.0",
-    "@types/node": "^20.11.0",
-    "wrangler": "^3.80.0"
+    "vite": "^5.0.0"
   }
 }
