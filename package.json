@@ -1,0 +1,27 @@
+{
+  "name": "my-cf-mastra-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "deploy": "wrangler deploy --config .mastra/output/wrangler.json",
+    "cf:dev": "wrangler dev --config .mastra/output/wrangler.json",
+    "cf:login": "wrangler login",
+    "postbuild": "echo 'Build complete. Use wrangler deploy with .mastra/output/wrangler.json'"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@mastra/core": "latest",
+    "@mastra/deployer-cloudflare": "latest",
+    "@ai-sdk/openai": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.11.0",
+    "wrangler": "^3.80.0"
+  }
+}
