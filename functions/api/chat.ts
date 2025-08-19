@@ -1,12 +1,24 @@
-import { Hono } from 'hono'
-import { agent } from '../../src/agent'
+// functions/api/chat.ts
+import { graphql, buildSchema } from "graphql";
+import { chatAgent } from "../../src/mastra/agent";
 
-const app = new Hono()
+const schema = buildSchema(`
+  type Query {
+    ask(query: String!): String
+  }
+`);
 
-app.post('/', async (c) => {
-  const { message } = await c.req.json()
-  const reply = await agent.run(message)
-  return c.json({ reply })
-})
+const root = {
+  ask: async ({ query }: { query: string }) => {
+    const res = await chatAgent.generate(query);
+    return res.text;
+  },
+};
 
-export default app
+export const onRequestPost = async (context) => {
+  const body = await context.request.json();
+  const result = await graphql({ schema, source: body.query, rootValue: root });
+  return new Response(JSON.stringify(result), {
+    headers: { "Content-Type": "application/json" },
+  });
+};
