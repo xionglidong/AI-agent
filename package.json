@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@mastra/core": "^0.1.0",
-    "@ai-sdk/openai": "^0.1.0",
     "graphql": "^16.8.1",
     "zod": "^3.22.4",
     "react": "^18.3.1",
