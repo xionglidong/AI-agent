@@ -7,7 +7,7 @@ export const onRequest = async (context) => {
   const query = url.searchParams.get("q") || "Hello!";
 
   const llm = new OpenAI({
-    apiKey: env.OPENAI_API_KEY, // 来自 Cloudflare Pages 环境变量
+    apiKey: env.OPENAI_API_KEY, // 从 Cloudflare Pages 环境变量注入
     model: "gpt-4o-mini"
   });
 
