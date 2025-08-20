@@ -1,7 +1,260 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
 
-body {
-  @apply bg-white text-gray-900;
+/* Markdown 样式增强 */
+.markdown-content {
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-content p {
+  margin-bottom: 0.75rem;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content code {
+  font-family: 'Fira Code', 'Monaco', 'Consolas', 'Courier New', monospace;
+  font-size: 0.875em;
+}
+
+.markdown-content pre {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.markdown-content pre code {
+  font-size: 0.875rem;
+  padding: 0;
+  background: transparent;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdown-content li {
+  margin: 0.25rem 0;
+}
+
+.markdown-content blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #3b82f6;
+  background-color: #eff6ff;
+  border-radius: 0.375rem;
+  font-style: italic;
+}
+
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-content h1 {
+  font-size: 1.5rem;
+}
+
+.markdown-content h2 {
+  font-size: 1.25rem;
+}
+
+.markdown-content h3 {
+  font-size: 1.125rem;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.markdown-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.markdown-content a:hover {
+  color: #1d4ed8;
+}
+
+/* 用户消息的 Markdown 样式调整 */
+.user-markdown {
+  color: white;
+}
+
+.user-markdown a {
+  color: #93c5fd;
+}
+
+.user-markdown a:hover {
+  color: #dbeafe;
+}
+
+.user-markdown code {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.user-markdown blockquote {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 代码高亮样式 */
+.hljs {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+/* 图标动画 */
+.icon-bounce {
+  animation: iconBounce 0.6s ease-in-out;
+}
+
+@keyframes iconBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-1px);
+  }
+}
+
+/* 输入框图标样式 */
+.input-icon {
+  transition: all 0.2s ease;
+}
+
+.input-icon:hover {
+  transform: scale(1.1);
+}
+
+/* 表情动画 */
+.emoji-bounce {
+  animation: emojiBounce 0.6s ease-in-out;
+}
+
+@keyframes emojiBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-5px) scale(1.1);
+  }
+  60% {
+    transform: translateY(-2px) scale(1.05);
+  }
+}
+
+/* 增强消息头部样式 */
+.enhanced-message-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 表情悬停效果 */
+.emoji-hover {
+  transition: all 0.3s ease;
+}
+
+.emoji-hover:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.hljs-keyword {
+  color: #f472b6 !important;
+}
+
+.hljs-string {
+  color: #34d399 !important;
+}
+
+.hljs-comment {
+  color: #9ca3af !important;
+  font-style: italic;
+}
+
+.hljs-function {
+  color: #60a5fa !important;
+}
+
+.hljs-number {
+  color: #fbbf24 !important;
+}
+
+.hljs-operator {
+  color: #f472b6 !important;
+}
+
+.hljs-punctuation {
+  color: #d1d5db !important;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out;
 }
