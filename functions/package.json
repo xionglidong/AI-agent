@@ -1,9 +1,0 @@
-{
-  "name": "functions",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "@mastra/core": "latest",
-    "@mastra/openai": "latest"
-  }
-}
