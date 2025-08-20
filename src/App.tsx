@@ -3,6 +3,14 @@ import { Send, Bot, User, Sparkles, Code, Lightbulb, HelpCircle, MessageSquare, 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import { MastraClient } from "@mastra/client-js";
+
+const mastraClient = new MastraClient({
+  baseUrl: "https://mastra.unnaturalxld.workers.dev",
+  retries: 3,
+  backoffMs: 300,
+  maxBackoffMs: 5000,
+});
 
 interface Message {
   role: 'user' | 'assistant';
@@ -315,36 +323,63 @@ export default function App() {
     });
     
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: 'mutation { chat { choices { message { content } } } }',
-          variables: {
-            model: 'gpt-4o-mini',
-            messages: [...messages, userMsg].map(({ role, content }) => ({ role, content })),
-            stream: false,
+      const agent = mastraClient.getAgent(
+        "studyAssistantAgentOpenAi"
+      );
+      // 流式响应
+      const streamResponse = await agent.stream({
+        messages: [
+          {
+            role: "user",
+            content: userMsg.content,
           },
-        }),
+        ],
       });
 
-      if (!res.ok) {
-        const txt = await res.text();
-        setMessages((prev) => [
-          ...prev,
-          { role: 'assistant', content: `😔 **错误**: ${txt}`, timestamp: Date.now() },
-        ]);
-      } else {
-        const json = await res.json();
-        const content =
-          json.data?.choices?.[0]?.message?.content ||
-          json.data?.chat?.choices?.[0]?.message?.content ||
-          '无响应';
-        setMessages((prev) => [
-          ...prev,
-          { role: 'assistant', content, timestamp: Date.now() },
-        ]);
-      }
+      // 处理流式数据
+      streamResponse.processDataStream({
+        onTextPart: (text) => {
+          console.log("收到文本:", text);
+          // 更新 UI - 追加文本到当前消息
+          setMessages((prev) =>
+            prev.map((msg) => msg)
+          // { ...msg, content: msg.content + text } 
+          );
+        },
+        onToolCallPart: (toolCall) => {
+          console.log("工具调用:", toolCall);
+        },
+      });
+      // const res = await fetch('/api/chat', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     query: 'mutation { chat { choices { message { content } } } }',
+      //     variables: {
+      //       model: 'gpt-4o-mini',
+      //       messages: [...messages, userMsg].map(({ role, content }) => ({ role, content })),
+      //       stream: false,
+      //     },
+      //   }),
+      // });
+
+      // if (!res.ok) {
+      //   const txt = await res.text();
+      //   setMessages((prev) => [
+      //     ...prev,
+      //     { role: 'assistant', content: `😔 **错误**: ${txt}`, timestamp: Date.now() },
+      //   ]);
+      // } else {
+      //   const json = await res.json();
+      //   const content =
+      //     json.data?.choices?.[0]?.message?.content ||
+      //     json.data?.chat?.choices?.[0]?.message?.content ||
+      //     '无响应';
+      //   setMessages((prev) => [
+      //     ...prev,
+      //     { role: 'assistant', content, timestamp: Date.now() },
+      //   ]);
+      // }
     } catch (e: any) {
       setMessages((prev) => [
         ...prev,
