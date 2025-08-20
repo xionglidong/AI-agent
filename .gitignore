@@ -1,1 +1,9 @@
 node_modules
+<<<<<<< HEAD
+=======
+.env
+.mastra
+dist
+.wrangler
+.DS_Store
+>>>>>>> 0ac00ab78c201a6f89ac586c0ab91c4ff994bedb
