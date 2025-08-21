@@ -342,7 +342,7 @@ export default function App() {
           console.log("收到文本:", text);
           // 更新 UI - 追加文本到当前消息
           setMessages((prev) =>
-            prev.map((msg) => { return {...msg, content: msg.content + text }})
+            prev.map((msg) => { return {...msg,role: 'assistant', content: msg.content + text,timestamp: Date.now() }})
           );
         },
         onToolCallPart: (toolCall) => {
