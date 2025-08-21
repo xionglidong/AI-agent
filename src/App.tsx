@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight';
 import { MastraClient } from "@mastra/client-js";
 
 const mastraClient = new MastraClient({
-  baseUrl: "https://mastra.unnaturalxld.workers.dev",
+  baseUrl: "https://mastra.coderxld.uk",
   retries: 3,
   backoffMs: 300,
   maxBackoffMs: 5000,
