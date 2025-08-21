@@ -324,7 +324,7 @@ export default function App() {
     
     try {
       const agent = mastraClient.getAgent(
-        "weather-agent"
+        "weatherAgent"
       );
       // 流式响应
       const streamResponse = await agent.stream({
