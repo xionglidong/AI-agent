@@ -20,6 +20,11 @@ interface Message {
 
 // AI回答增强组件
 const EnhancedAIMessage: React.FC<{ content: string }> = ({ content }) => {
+  // 如果内容为空，不显示增强头部
+  if (!content.trim()) {
+    return null;
+  }
+
   // 检测内容类型并添加相应的图标和表情
   const getMessageEnhancement = (text: string) => {
     const lowerText = text.toLowerCase();
@@ -347,15 +352,18 @@ export default function App() {
       });
 
       // 处理流式数据
-      streamResponse.processDataStream({
+      await streamResponse.processDataStream({
         onTextPart: (text) => {
           console.log("收到文本:", text);
-          // 更新 UI - 只更新最新的AI消息
+          // 更新 UI - 只更新最新的AI消息，使用不可变更新
           setMessages((prev) => {
             const newMessages = [...prev];
-            const lastMessage = newMessages[newMessages.length - 1];
-            if (lastMessage && lastMessage.role === 'assistant') {
-              lastMessage.content += text;
+            const lastIndex = newMessages.length - 1;
+            if (lastIndex >= 0 && newMessages[lastIndex].role === 'assistant') {
+              newMessages[lastIndex] = {
+                ...newMessages[lastIndex],
+                content: newMessages[lastIndex].content + text
+              };
             }
             return newMessages;
           });
@@ -375,9 +383,12 @@ export default function App() {
           console.error("流式响应错误:", error);
           setMessages((prev) => {
             const newMessages = [...prev];
-            const lastMessage = newMessages[newMessages.length - 1];
-            if (lastMessage && lastMessage.role === 'assistant') {
-              lastMessage.content += `\n\n❌ **流式响应错误**: ${error.message || '未知错误'}`;
+            const lastIndex = newMessages.length - 1;
+            if (lastIndex >= 0 && newMessages[lastIndex].role === 'assistant') {
+              newMessages[lastIndex] = {
+                ...newMessages[lastIndex],
+                content: newMessages[lastIndex].content + `\n\n❌ **流式响应错误**: ${error.message || '未知错误'}`
+              };
             }
             return newMessages;
           });
@@ -501,7 +512,11 @@ export default function App() {
                       </p>
                     ) : (
                       <div className="text-sm leading-relaxed">
-                        <EnhancedAIMessage content={msg.content} />
+                        {msg.content.trim() ? (
+                          <EnhancedAIMessage content={msg.content} />
+                        ) : (
+                          <p className="text-gray-400 italic">正在思考中...</p>
+                        )}
                       </div>
                     )}
                   </div>
