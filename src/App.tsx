@@ -453,9 +453,9 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-2xl font-bold">天气助手</h1>
-              <p className="text-white/80 text-sm flex items-center gap-1">
+              {/* <p className="text-white/80 text-sm flex items-center gap-1">
                 <Code className="w-4 h-4" />
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
