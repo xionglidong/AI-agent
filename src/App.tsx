@@ -534,23 +534,25 @@ export default function App() {
           ))}
           
           {/* Loading indicator */}
-          {loading && (
-            <div className="flex items-start gap-3 animate-pulse">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
-              </div>
-              <div className="bg-white/90 px-6 py-4 rounded-2xl shadow-lg border border-gray-200/50">
-                                  <div className="flex items-center gap-2">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                    </div>
-                    <span className="text-sm text-gray-500">🤔 AI 正在思考中...</span>
-                  </div>
-              </div>
-            </div>
-          )}
+          {
+          // loading && (
+          //   <div className="flex items-start gap-3 animate-pulse">
+          //     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+          //       <Bot className="w-4 h-4 text-white" />
+          //     </div>
+          //     <div className="bg-white/90 px-6 py-4 rounded-2xl shadow-lg border border-gray-200/50">
+          //                         <div className="flex items-center gap-2">
+          //           <div className="flex space-x-1">
+          //             <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+          //             <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+          //             <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          //           </div>
+          //           <span className="text-sm text-gray-500">🤔 AI 正在思考中...</span>
+          //         </div>
+          //     </div>
+          //   </div>
+          // )
+          }
           
           <div ref={messagesEndRef} />
         </div>
