@@ -393,9 +393,15 @@ export default function App() {
             return newMessages;
           });
           setLoading(false);
+          requestAnimationFrame(() => {
+            inputRef.current?.focus();
+          });
         },
       });
       setLoading(false);
+      requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
       // const res = await fetch('/api/chat', {
       //   method: 'POST',
       //   headers: { 'Content-Type': 'application/json' },
@@ -590,14 +596,19 @@ export default function App() {
             
             <button
               onClick={sendMessage}
-              disabled={loading || !input.trim()}
+              disabled={false && (loading || !input.trim())}
               className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
+              {
+              // loading ? (
+              //   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              // ) : (
+              //   <Send className="w-5 h-5" />
+              // )
+              (
                 <Send className="w-5 h-5" />
-              )}
+              )
+              }
             </button>
           </div>
         </div>
