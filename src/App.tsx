@@ -326,6 +326,16 @@ export default function App() {
       const agent = mastraClient.getAgent(
         "weatherAgent"
       );
+      
+      // 创建初始的AI消息
+      const aiMessage: Message = {
+        role: 'assistant',
+        content: '',
+        timestamp: Date.now(),
+      };
+      
+      setMessages((prev) => [...prev, aiMessage]);
+      
       // 流式响应
       const streamResponse = await agent.stream({
         messages: [
@@ -340,13 +350,38 @@ export default function App() {
       streamResponse.processDataStream({
         onTextPart: (text) => {
           console.log("收到文本:", text);
-          // 更新 UI - 追加文本到当前消息
-          setMessages((prev) =>
-            prev.map((msg) => { return {...msg,role: 'assistant', content: msg.content + text,timestamp: Date.now() }})
-          );
+          // 更新 UI - 只更新最新的AI消息
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            const lastMessage = newMessages[newMessages.length - 1];
+            if (lastMessage && lastMessage.role === 'assistant') {
+              lastMessage.content += text;
+            }
+            return newMessages;
+          });
         },
         onToolCallPart: (toolCall) => {
           console.log("工具调用:", toolCall);
+        },
+        onFinish: () => {
+          console.log("流式响应完成");
+          setLoading(false);
+          // 确保在请求完成后重新获得焦点
+          requestAnimationFrame(() => {
+            inputRef.current?.focus();
+          });
+        },
+        onError: (error) => {
+          console.error("流式响应错误:", error);
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            const lastMessage = newMessages[newMessages.length - 1];
+            if (lastMessage && lastMessage.role === 'assistant') {
+              lastMessage.content += `\n\n❌ **流式响应错误**: ${error.message || '未知错误'}`;
+            }
+            return newMessages;
+          });
+          setLoading(false);
         },
       });
       // const res = await fetch('/api/chat', {
@@ -380,11 +415,11 @@ export default function App() {
       //   ]);
       // }
     } catch (e: any) {
+      console.error("请求异常:", e);
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', content: `😅 **请求异常**: ${e.message}`, timestamp: Date.now() },
       ]);
-    } finally {
       setLoading(false);
       // 确保在请求完成后重新获得焦点
       requestAnimationFrame(() => {
