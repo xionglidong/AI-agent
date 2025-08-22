@@ -30,9 +30,9 @@ const EnhancedAIMessage: React.FC<{ content: string }> = ({ content }) => {
     const lowerText = text.toLowerCase();
     
     // 代码相关
-    if (lowerText.includes('代码') || lowerText.includes('function') || lowerText.includes('const') || lowerText.includes('var') || lowerText.includes('let')) {
-      return { icon: <Code className="w-4 h-4" />, emoji: '💻', prefix: '代码时间！' };
-    }
+    // if (lowerText.includes('代码') || lowerText.includes('function') || lowerText.includes('const') || lowerText.includes('var') || lowerText.includes('let')) {
+    //   return { icon: <Code className="w-4 h-4" />, emoji: '💻', prefix: '代码时间！' };
+    // }
     
     // 学习/教育相关
     if (lowerText.includes('学习') || lowerText.includes('教程') || lowerText.includes('解释') || lowerText.includes('概念')) {
@@ -286,15 +286,6 @@ export default function App() {
     {
       role: 'assistant',
       content: `👋 你好！我是你的AI助手，有什么可以帮助你的吗？
-
-我可以帮助你：
-- **编写代码** 💻 - 支持多种编程语言
-- **解释概念** 💡 - 用简单易懂的方式说明
-- **解决问题** 🔧 - 分析并提供解决方案
-- **创意写作** ✨ - 帮助创作各种内容
-- **学习指导** 📚 - 提供学习建议和方法
-- **技术咨询** 🛠️ - 解答技术问题
-
 🎯 试试问我一些问题吧！`,
       timestamp: Date.now() - 60000
     }
@@ -461,7 +452,7 @@ export default function App() {
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">AI 智能助手</h1>
+              <h1 className="text-2xl font-bold">天气助手</h1>
               <p className="text-white/80 text-sm flex items-center gap-1">
                 <Code className="w-4 h-4" />
               </p>
